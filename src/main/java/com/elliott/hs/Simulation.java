@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import static com.elliott.hs.generator.RandomBoardGenerator.generateRandomBoard;
 
@@ -18,10 +17,8 @@ public class Simulation {
     private static final Logger logger = LoggerFactory.getLogger(Game.class);
 
     public static void main(String[] args) {
-
         Simulation simulation = new Simulation();
         simulation.run();
-
     }
 
     private void run() {
@@ -30,7 +27,7 @@ public class Simulation {
 
         logger.info("RUNNING SIM");
 
-        for (int i = 0; i < 10_000_000; i++) {
+        for (int i = 0; i < 5_000_000; i++) {
             Game game = new Game();
 
             Board b1 = generateRandomBoard();

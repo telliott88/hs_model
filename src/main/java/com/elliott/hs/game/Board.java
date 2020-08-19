@@ -56,12 +56,26 @@ public class Board {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Board board = (Board) o;
-        return Objects.equals(cards, board.cards);
+
+        for(Card card: cards) {
+            if(!board.cards.contains(card)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards);
+
+        int code = 13;
+
+        for(Card card: cards){
+            code = code * card.hashCode() * 13;
+        }
+
+        return code;
     }
 
     @Override
