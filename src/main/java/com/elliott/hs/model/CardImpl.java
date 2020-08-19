@@ -6,12 +6,14 @@ public class CardImpl implements Card {
     private int attack;
     private int defense;
     private int level;
+    private Tribe tribe;
 
-    public CardImpl(String name, int attack, int defense, int level) {
+    public CardImpl(String name, int attack, int defense, int level, Tribe tribe) {
         this.name = name;
         this.attack = attack;
         this.defense = defense;
         this.level = level;
+        this.tribe = tribe;
     }
 
     @Override

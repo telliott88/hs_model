@@ -1,7 +1,7 @@
 package com.elliott.hs.game;
 
-import com.elliott.hs.cards.AlleyCat;
-import com.elliott.hs.cards.MicroMachine;
+import com.elliott.hs.cards.tier1.beast.AlleyCat;
+import com.elliott.hs.cards.tier1.mech.MicroMachine;
 import com.elliott.hs.model.Card;
 import org.junit.jupiter.api.Test;
 

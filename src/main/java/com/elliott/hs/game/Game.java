@@ -1,7 +1,5 @@
 package com.elliott.hs.game;
 
-import com.elliott.hs.cards.AlleyCat;
-import com.elliott.hs.cards.MicroMachine;
 import com.elliott.hs.model.Card;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +47,6 @@ public class Game {
     private void playTurn(Player firstAttacker) {
         logger.info("Starting turn " + turn);
 
-
         //decide attacker
         firstAttacker.setAttacker(true);
         Player firstDefender = getNonAttacker();
@@ -59,7 +56,9 @@ public class Game {
 
             logger.info("NEXT ATTACK");
 
-            Card attackingCard = determineAttackingCard(firstAttacker);
+            int attackIndex = determineAttackingCard(firstAttacker);
+            Card attackingCard = firstAttacker.getBoard().getCards().get(attackIndex);
+
             logger.info("Attacker is " + attackingCard.getName());
             Card defendingCard = determineDefendingCard(firstDefender);
             logger.info("Defender is " + defendingCard.getName());
@@ -76,6 +75,8 @@ public class Game {
             firstDefender.getBoard().removeDeadCards();
 
             switchAttackerDefender(firstAttacker, firstDefender);
+
+            firstAttacker.getBoard().setLastAttackIndex(attackIndex);
 
         }
 
@@ -104,27 +105,27 @@ public class Game {
         return gameBoard.get(rand);
     }
 
-    private Card determineAttackingCard(Player attacker) {
+    private int determineAttackingCard(Player attacker) {
         logger.info("Determining attacker..");
 
-        Card attackingCard = null;
+        int attackingCard = 0;
 
         //always far left on first turn
         if(turn == 1) {
-            return attacker.getBoard().getCards().get(0);
+            return 0;
         }
 
         int lastAttack = attacker.getBoard().getLastAttackIndex();
 
         if(attacker.getBoard().getCards().size() == 1) {
             //one card left, it attacks again
-            attackingCard = attacker.getBoard().getCards().get(0);
+            attackingCard = 0;
         } else if(attacker.getBoard().getCards().size()-1 == lastAttack) {
             //attacker was far right, go far left
-            attackingCard = attacker.getBoard().getCards().get(0);
+            attackingCard = 0;
         } else {
             //next on the right
-            attackingCard = attacker.getBoard().getCards().get(lastAttack+1);
+            attackingCard = lastAttack+1;
         }
 
         return attackingCard;

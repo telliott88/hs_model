@@ -1,13 +1,15 @@
 package com.elliott.hs.game;
 
-import com.elliott.hs.cards.AlleyCat;
-import com.elliott.hs.cards.MicroMachine;
+import com.elliott.hs.cards.tier1.beast.AlleyCat;
+import com.elliott.hs.cards.tier1.mech.MicroMachine;
+import com.elliott.hs.generator.RandomBoardGenerator;
 import com.elliott.hs.model.Card;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.elliott.hs.generator.RandomBoardGenerator.generateRandomBoard;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameTest {
@@ -54,5 +56,22 @@ public class GameTest {
         assertEquals(0, game.getGameBoard().get(1).getBoard().getCards().size());
         assertEquals(1, game.getGameBoard().get(0).getBoard().getCards().get(0).getDefense());
         assertEquals(1, game.getGameBoard().get(0).getBoard().getCards().get(0).getAttack());
+    }
+
+    @Test
+    public void testFullBoardRandomised() {
+        Game game = new Game();
+
+
+        game.addPlayer(new Player("Tim", generateRandomBoard()));
+        game.addPlayer(new Player("Mox", generateRandomBoard()));
+
+        game.getGameBoard().get(0).getBoard().printBoard();
+        game.getGameBoard().get(1).getBoard().printBoard();
+
+        assertEquals(7, game.getGameBoard().get(0).getBoard().getCards().size());
+        assertEquals(7, game.getGameBoard().get(1).getBoard().getCards().size());
+
+        game.play();
     }
 }
