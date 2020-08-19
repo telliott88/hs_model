@@ -4,17 +4,24 @@ import com.elliott.hs.model.Card;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Board {
 
     private static final Logger logger = LoggerFactory.getLogger(Board.class);
 
-    private final List<Card> cards;
+    private List<Card> cards;
+    private List<Card> initialCards;
     private int lastAttackIndex;
 
     public Board(List<Card> cards) {
         this.cards = cards;
+        initialCards = new ArrayList<>();
+        initialCards.addAll(this.cards);
     }
 
     public List<Card> getCards() {
@@ -38,5 +45,29 @@ public class Board {
         for(Card card: cards) {
             logger.info(card.getName() + " ("+card.getAttack()+","+card.getDefense()+")");
         }
+    }
+
+    public void reset() {
+        this.cards = this.initialCards;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return Objects.equals(cards, board.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "cards=" + cards +
+                '}';
     }
 }

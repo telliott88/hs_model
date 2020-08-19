@@ -11,4 +11,6 @@ public interface Card {
     void setDefense(int defense);
 
     String getName();
+
+    void reset();
 }

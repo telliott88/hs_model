@@ -13,6 +13,7 @@ public class Game {
     private List<Player> gameBoard;
     private int turn;
     private boolean battleFinished;
+    private Player winner = null;
 
     public Game() {
         gameBoard = new ArrayList<>();
@@ -24,7 +25,7 @@ public class Game {
 
     public void play() {
 
-        logger.info("Starting game");
+        //logger.info("Starting game");
         turn = 1;
         battleFinished = false;
         Player firstAttacker = determineFirstAttacker();
@@ -36,7 +37,7 @@ public class Game {
     private boolean isBattleFinished() {
         for (Player player: gameBoard) {
             if(player.getBoard().getCards().size() == 0) {
-                logger.info("Player " + player.getName() + " is DEAD");
+                //logger.info("Player " + player.getName() + " is DEAD");
                 return true;
             }
         }
@@ -45,7 +46,6 @@ public class Game {
     }
 
     private void playTurn(Player firstAttacker) {
-        logger.info("Starting turn " + turn);
 
         //decide attacker
         firstAttacker.setAttacker(true);
@@ -54,14 +54,12 @@ public class Game {
 
         while(!isBattleFinished()) {
 
-            logger.info("NEXT ATTACK");
-
             int attackIndex = determineAttackingCard(firstAttacker);
             Card attackingCard = firstAttacker.getBoard().getCards().get(attackIndex);
 
-            logger.info("Attacker is " + attackingCard.getName());
+            //logger.info("Attacker is " + attackingCard.getName());
             Card defendingCard = determineDefendingCard(firstDefender);
-            logger.info("Defender is " + defendingCard.getName());
+            //logger.info("Defender is " + defendingCard.getName());
 
             Battle battle = Battle.BattleBuilder.getBuilder()
                     .attacker(attackingCard)
@@ -80,6 +78,19 @@ public class Game {
 
         }
 
+        //set winner
+        for(Player player: gameBoard) {
+            if(player.getBoard().getCards().size() != 0) {
+                winner = player;
+                player.getBoard().reset();
+                for(Card card: player.getBoard().getCards()) {
+                    card.reset();
+                }
+            }
+        }
+
+
+
     }
 
     private void switchAttackerDefender(Player firstAttacker, Player firstDefender) {
@@ -97,16 +108,16 @@ public class Game {
     }
 
     private Player determineFirstAttacker() {
-        logger.info("Determining first attacker..");
+        //logger.info("Determining first attacker..");
         Random random = new Random();
         int rand = random.nextInt(2);
-        logger.info("Rolled a " + rand);
-        logger.info("First player is " + gameBoard.get(rand).getName());
+        //logger.info("Rolled a " + rand);
+        //logger.info("First player is " + gameBoard.get(rand).getName());
         return gameBoard.get(rand);
     }
 
     private int determineAttackingCard(Player attacker) {
-        logger.info("Determining attacker..");
+        //logger.info("Determining attacker..");
 
         int attackingCard = 0;
 
@@ -132,16 +143,20 @@ public class Game {
     }
 
     private Card determineDefendingCard(Player defender) {
-        logger.info("Determining defender..");
+        //logger.info("Determining defender..");
         Random random = new Random();
         int sizeOfDefendersBoard = defender.getBoard().getCards().size();
         int rand = random.nextInt(sizeOfDefendersBoard);
-        logger.info("Size of Defenders board is " + sizeOfDefendersBoard);
-        logger.info("Rolled a " + rand);
+        //logger.info("Size of Defenders board is " + sizeOfDefendersBoard);
+        //logger.info("Rolled a " + rand);
         return defender.getBoard().getCards().get(rand);
     }
 
     public List<Player> getGameBoard() {
         return gameBoard;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 }

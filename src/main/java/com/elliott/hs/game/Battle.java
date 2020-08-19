@@ -17,9 +17,9 @@ public class Battle {
 
     public void fight() {
 
-        logger.info(attacker.getName() + " attacks " + defender.getName());
-        logBattleStatus();
-        logger.info("-- RESULTS --");
+        //logger.info(attacker.getName() + " attacks " + defender.getName());
+        //logBattleStatus();
+        //logger.info("-- RESULTS --");
 
         //update attacker
         int attackerDefense = attacker.getDefense();
@@ -31,7 +31,7 @@ public class Battle {
         int defenderDefense = defender.getDefense();
         defender.setDefense(defenderDefense-attackerAttack);
 
-        logBattleStatus();
+        //logBattleStatus();
     }
 
     private void logBattleStatus() {

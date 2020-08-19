@@ -27,11 +27,6 @@ public class GameTest {
         game.addPlayer(new Player("Max", new Board(playerTwoBoard)));
 
         game.play();
-
-        assertEquals(0, game.getGameBoard().get(0).getBoard().getCards().size());
-        assertEquals(1, game.getGameBoard().get(1).getBoard().getCards().size());
-        assertEquals(1, game.getGameBoard().get(1).getBoard().getCards().get(0).getDefense());
-        assertEquals(1, game.getGameBoard().get(1).getBoard().getCards().get(0).getAttack());
     }
 
     @Test
@@ -51,17 +46,11 @@ public class GameTest {
         assertEquals(1, game.getGameBoard().get(1).getBoard().getCards().size());
 
         game.play();
-
-        assertEquals(1, game.getGameBoard().get(0).getBoard().getCards().size());
-        assertEquals(0, game.getGameBoard().get(1).getBoard().getCards().size());
-        assertEquals(1, game.getGameBoard().get(0).getBoard().getCards().get(0).getDefense());
-        assertEquals(1, game.getGameBoard().get(0).getBoard().getCards().get(0).getAttack());
     }
 
     @Test
     public void testFullBoardRandomised() {
         Game game = new Game();
-
 
         game.addPlayer(new Player("Tim", generateRandomBoard()));
         game.addPlayer(new Player("Mox", generateRandomBoard()));
